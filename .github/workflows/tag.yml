@@ -22,13 +22,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Install NodeJS Dependencies
-      run: npm install
+    - name: Install GoLang Dependencies
+      run: |
+        go mod init dispatch
+        go get
+        go build
 
     - name: Build
       run: |
         echo $GITHUB_REF_NAME > VERSION
-        zip -r dispatch-$GITHUB_REF_NAME.zip *
+        zip -r dispatch-$GITHUB_REF_NAME.zip dispatch VERSION
 
     - name: Release App
       run: |
